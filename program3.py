@@ -9,12 +9,15 @@
 # Date:         9/30/2020
 
 from matplotlib import pyplot as pyp
+
+
 # Creating function calc_mpg
 def calc_mpg(mph):
     mph = float(mph)
     mpg = -5.9852 + 1.6052 * mph - 0.0141 * mph ** 2
     mpg = round(mpg, 2)
     return mpg
+
 
 # Creating function trip
 def trip(fuel_cost, distance):
@@ -31,10 +34,11 @@ def trip(fuel_cost, distance):
         cost_list.append(round((distance / i) * fuel_cost, 2))
     for i in vMPH_list:
         time_list.append(round(distance / i, 2))
-    return vMPH_list, mpg_list, cost_list, time_list
+    return vMPH_list, mpg_list, cost_list, time_list, fuel_cost, distance
 
-mph, mpg, cost, time = trip(input("Enter the current cost of fuel per gallon: "),
-                            input("Enter the distance you wish to travel: "))
+
+mph, mpg, cost, time, fuel_cost, distance = trip(input("Enter the current cost of fuel per gallon: "),
+                                                 input("Enter the distance you wish to travel: "))
 user_input = 0
 while user_input != 5:
     print("1 - Create a table")
@@ -54,13 +58,18 @@ while user_input != 5:
                   "|", "$" + str(cost[i]), " " * (5 - len(str(cost[i]))),
                   "|", time[i], "hours", " " * (2 - len(str(time[i]))), "|")
     if user_input == 2:
-        pyp.plot(mph[4:],cost[4:])
+        pyp.plot(mph[4:], cost[4:])
         pyp.xlabel("Miles per Hour")
         pyp.ylabel("Cost in Dollars")
         pyp.show()
     if user_input == 3:
-        pyp.plot(time[4:],cost[4:])
+        pyp.plot(time[4:], cost[4:])
         pyp.xlabel("Time in Hours")
         pyp.ylabel("Cost in Dollars")
         pyp.show()
     if user_input == 4:
+        user_mph = int(input("Enter the specific speed: "))
+        user_mpg = calc_mpg(user_mph)
+        user_cost = round((distance / user_mph) * fuel_cost, 2)
+        user_time = round(distance / user_mph, 2)
+        print("The cost and time needed at {} mph are ${} and {} Hours.".format(user_mph, user_cost, user_time))
