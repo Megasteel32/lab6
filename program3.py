@@ -8,6 +8,7 @@
 # Assignment:   Lab 6 Program 3
 # Date:         9/30/2020
 
+from matplotlib import pyplot as pyp
 # Creating function calc_mpg
 def calc_mpg(mph):
     mph = float(mph)
@@ -29,7 +30,7 @@ def trip(fuel_cost, distance):
     for i in mpg_list:
         cost_list.append(round((distance / i) * fuel_cost, 2))
     for i in vMPH_list:
-        time_list.append(round(i / distance, 2))
+        time_list.append(round(distance / i, 2))
     return vMPH_list, mpg_list, cost_list, time_list
 
 mph, mpg, cost, time = trip(input("Enter the current cost of fuel per gallon: "),
@@ -52,3 +53,14 @@ while user_input != 5:
                   "|", mpg[i], "mpg", " " * (5 - len(str(mpg[i]))),
                   "|", "$" + str(cost[i]), " " * (5 - len(str(cost[i]))),
                   "|", time[i], "hours", " " * (2 - len(str(time[i]))), "|")
+    if user_input == 2:
+        pyp.plot(mph[4:],cost[4:])
+        pyp.xlabel("Miles per Hour")
+        pyp.ylabel("Cost in Dollars")
+        pyp.show()
+    if user_input == 3:
+        pyp.plot(time[4:],cost[4:])
+        pyp.xlabel("Time in Hours")
+        pyp.ylabel("Cost in Dollars")
+        pyp.show()
+    if user_input == 4:
